@@ -2,7 +2,23 @@
 <mat-toolbar color="primary">
   <span>{{title}}</span>
 </mat-toolbar>
-<app-categories [categories]="competition.categories" (addCategory)="addCategory($event)"
-                (deleteCategory)="deleteCategory($event)"></app-categories>
-<app-competitor-list [competitors]="competition.comptetitors"
-                     [categories]="competition.categories" (addCompetitor)="addCompetitor($event)"></app-competitor-list>
+<mat-tab-group>
+  <mat-tab label="Kategorieen">
+    <app-categories [categories]="competition.categories" (addCategory)="addCategory($event)"
+                    (deleteCategory)="deleteCategory($event)"></app-categories>
+  </mat-tab>
+  <mat-tab label="Teilnehmer">
+    <app-competitor-list [competitors]="competition.comptetitors"
+                         [categories]="competition.categories"
+                         (addCompetitor)="addCompetitor($event)"></app-competitor-list>
+  </mat-tab>
+  <mat-tab label="Phase A">
+    <app-phase-editor [phaseData]="competition.phaseA"></app-phase-editor>
+  </mat-tab>
+  <mat-tab label="Phase Transfer">
+    <app-phase-editor [phaseData]="competition.phaseTransfer"></app-phase-editor>
+  </mat-tab>
+  <mat-tab label="Phase B">
+    <app-phase-editor [phaseData]="competition.phaseB"></app-phase-editor>
+  </mat-tab>
+</mat-tab-group>

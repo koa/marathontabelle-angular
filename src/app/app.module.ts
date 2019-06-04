@@ -10,18 +10,20 @@ import {
   MatInputModule,
   MatSelectModule,
   MatSortModule,
-  MatTableModule,
+  MatTableModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 import { CompetitorListComponent } from './components/competitor-list/competitor-list.component';
 import {FormsModule} from '@angular/forms';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { PhaseEditorComponent } from './components/phase-editor/phase-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CompetitorListComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    PhaseEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
     FormsModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
