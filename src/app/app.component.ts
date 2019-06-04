@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {Competition} from './interfaces/competition';
+import {Category} from './interfaces/category';
+import {Competitor} from './interfaces/competitor';
 
 @Component({
   selector: 'app-root',
@@ -28,5 +30,20 @@ export class AppComponent {
 
   store(): void {
     'Hello ';
+  }
+
+  addCategory(newCategory: Category) {
+    console.log(this.competition.categories);
+    console.log('New Category: ');
+    console.log(newCategory);
+    this.competition.categories = this.competition.categories.concat(newCategory);
+  }
+
+  deleteCategory(removedCategory: Category) {
+    this.competition.categories = this.competition.categories.filter(c => c !== removedCategory);
+  }
+
+  addCompetitor(newCompetitor: Competitor) {
+    this.competition.comptetitors = this.competition.comptetitors.concat(newCompetitor);
   }
 }

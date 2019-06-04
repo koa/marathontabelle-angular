@@ -15,11 +15,13 @@ import {
 } from '@angular/material';
 import { CompetitorListComponent } from './components/competitor-list/competitor-list.component';
 import {FormsModule} from '@angular/forms';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompetitorListComponent
+    CompetitorListComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

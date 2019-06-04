@@ -2,5 +2,7 @@
 <mat-toolbar color="primary">
   <span>{{title}}</span>
 </mat-toolbar>
-
-<app-competitor-list [competitors]="competition.comptetitors" [categories]="competition.categories"></app-competitor-list>
+<app-categories [categories]="competition.categories" (addCategory)="addCategory($event)"
+                (deleteCategory)="deleteCategory($event)"></app-categories>
+<app-competitor-list [competitors]="competition.comptetitors"
+                     [categories]="competition.categories" (addCompetitor)="addCompetitor($event)"></app-competitor-list>
