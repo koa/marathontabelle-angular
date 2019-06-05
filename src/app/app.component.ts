@@ -21,10 +21,12 @@ export class AppComponent {
         startPhaseA: {hours: 10, minutes: 12}
       }],
       phaseA: {
-        length: 0
-      }, phaseTransfer: {
-        length: 0
-      }, phaseB: {length: 0}
+        length: 0, milestones: []
+      },
+      phaseTransfer: {
+        length: 0, milestones: []
+      },
+      phaseB: {length: 0, milestones: []}
     };
   }
 
