@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PhaseData} from '../../interfaces/phaseData';
 import {Milestone} from '../../interfaces/milestone';
+import {Category} from '../../interfaces/category';
 
 @Component({
   selector: 'app-phase-editor',
@@ -14,18 +15,17 @@ export class PhaseEditorComponent implements OnInit {
   TYPE_CTF = 'Pt';
   @Input() phaseData: PhaseData;
 
-  newMilestone: Milestone;
-  displayedColumns: string[] = ['type', 'index', 'position'];
-  private nextMilestone: Milestone;
+  @Output() update = new EventEmitter<PhaseData>();
+
+  displayedColumns: string[] = ['type', 'index', 'position', 'showOnTableButton', 'showOnSmallSheetButton', 'deleteButton', 'upButton', 'downButton'];
 
   constructor() {
-    this.newMilestone = {type: 'H', visibleOnSmallSheet: true, visibleOnTable: true, index: 0};
   }
 
   ngOnInit() {
   }
 
-  update(milestone: Milestone) {
+  updateMilestone(milestone: Milestone) {
     this.updateIndizes();
   }
 
@@ -54,7 +54,7 @@ export class PhaseEditorComponent implements OnInit {
       currentCounters.set(e.type, index + 1);
       return e;
     });
-
+    this.update.emit(this.phaseData);
   }
 
   addObstacle() {
@@ -69,5 +69,43 @@ export class PhaseEditorComponent implements OnInit {
       type: this.TYPE_CTF, visibleOnTable: true, visibleOnSmallSheet: true, index: 0
     });
     this.updateIndizes();
+  }
+
+  delete(milestone: Milestone) {
+    this.phaseData.milestones = this.phaseData.milestones.filter(m => m !== milestone);
+    this.updateIndizes();
+  }
+
+  up(index: number) {
+    const moveElement = this.phaseData.milestones[index];
+    const elementBevoreMove = this.phaseData.milestones[index - 1];
+    this.phaseData.milestones =
+      this.phaseData.milestones.slice(0, index - 1)
+        .concat(moveElement, elementBevoreMove)
+        .concat(this.phaseData.milestones.slice(index + 1, this.phaseData.milestones.length));
+    this.updateIndizes();
+
+  }
+
+  down(index: number) {
+    const moveElement = this.phaseData.milestones[index];
+    const elementAfterMove = this.phaseData.milestones[index + 1];
+    this.phaseData.milestones =
+      this.phaseData.milestones.slice(0, index)
+        .concat(elementAfterMove, moveElement)
+        .concat(this.phaseData.milestones.slice(index + 2, this.phaseData.milestones.length));
+    this.updateIndizes();
+
+  }
+
+  toggleTable(milestone: Milestone) {
+    milestone.visibleOnTable = !milestone.visibleOnTable;
+    this.updateIndizes();
+  }
+
+  toggleSmallSheet(milestone: Milestone) {
+    milestone.visibleOnSmallSheet = !milestone.visibleOnSmallSheet;
+    this.updateIndizes();
+
   }
 }

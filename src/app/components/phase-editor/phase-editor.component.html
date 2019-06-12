@@ -1,15 +1,23 @@
+<form>
+  <label for="phase.length">
+    Länge
+  </label>
+  <mat-form-field>
+    <input matInput id="phase.length" type="number" [(ngModel)]="phaseData.length">
+  </mat-form-field>
+</form>
+<mat-toolbar>
+  <button mat-raised-button (click)="addKm()">km</button>
+  <button mat-raised-button (click)="addObstacle()">H</button>
+  <button mat-raised-button (click)="addCtf()">Pt</button>
+</mat-toolbar>
 <table mat-table [dataSource]="phaseData.milestones" class="mat-elevation-z8">
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef i18n>Typ</th>
     <td mat-cell *matCellDef="let milestone">
       <mat-form-field>
-        <input matInput [(ngModel)]="milestone.type" (keyup.enter)="update(milestone)"
-               (blur)="update(milestone)">
-      </mat-form-field>
-    </td>
-    <td mat-footer-cell *matFooterCellDef>
-      <mat-form-field>
-        <input matInput [(ngModel)]="newMilestone.type">
+        <input matInput [(ngModel)]="milestone.type" (keyup.enter)="updateMilestone(milestone)"
+               (blur)="updateMilestone(milestone)">
       </mat-form-field>
     </td>
   </ng-container>
@@ -23,22 +31,52 @@
     <th mat-header-cell *matHeaderCellDef i18n>Position</th>
     <td mat-cell *matCellDef="let milestone">
       <mat-form-field>
-        <input matInput type="number" [(ngModel)]="milestone.position" (keyup.enter)="update(milestone)"
-               (blur)="update(milestone)">
+        <input matInput type="number" [(ngModel)]="milestone.position" (keyup.enter)="updateMilestone(milestone)"
+               (blur)="updateMilestone(milestone)">
       </mat-form-field>
     </td>
-    <td mat-footer-cell *matFooterCellDef>
-      <mat-form-field>
-        <input matInput [(ngModel)]="newMilestone.position">
-      </mat-form-field>
+  </ng-container>
+  <ng-container matColumnDef="showOnTableButton">
+    <th mat-header-cell *matHeaderCellDef i18n></th>
+    <td mat-cell *matCellDef="let milestone">
+      <mat-button-toggle mat-icon-button [checked]="milestone.visibleOnTable" (click)="toggleTable(milestone) ">
+        <mat-icon>table_chart</mat-icon>
+      </mat-button-toggle>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="showOnSmallSheetButton">
+    <th mat-header-cell *matHeaderCellDef i18n></th>
+    <td mat-cell *matCellDef="let milestone">
+      <mat-button-toggle mat-icon-button [checked]="milestone.visibleOnTable" (click)="toggleSmallSheet(milestone) ">
+        <mat-icon>calendar_today</mat-icon>
+      </mat-button-toggle>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="deleteButton">
+    <th mat-header-cell *matHeaderCellDef i18n></th>
+    <td mat-cell *matCellDef="let milestone">
+      <button mat-icon-button (click)="delete(milestone)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="upButton">
+    <th mat-header-cell *matHeaderCellDef i18n></th>
+    <td mat-cell *matCellDef="let milestone; let i = index">
+      <button mat-icon-button (click)="up(i)" *ngIf="i>0">
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="downButton">
+    <th mat-header-cell *matHeaderCellDef i18n></th>
+    <td mat-cell *matCellDef="let milestone; let i = index">
+      <button mat-icon-button (click)="down(i)" *ngIf="i<phaseData.milestones.length-1">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-toolbar>
-  <button mat-button (click)="addKm()">km</button>
-  <button mat-button (click)="addObstacle()">H</button>
-  <button mat-button (click)="addCtf()">Pt</button>
-</mat-toolbar>
 

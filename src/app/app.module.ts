@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
+  MatButtonModule, MatButtonToggleModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -37,7 +37,8 @@ import { PhaseEditorComponent } from './components/phase-editor/phase-editor.com
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

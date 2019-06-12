@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Competition} from './interfaces/competition';
 import {Category} from './interfaces/category';
 import {Competitor} from './interfaces/competitor';
+import {PhaseData} from './interfaces/phaseData';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,8 @@ export class AppComponent {
   }
 
   store(): void {
-    'Hello ';
+    console.log('Store');
+    console.log(this.competition);
   }
 
   addCategory(newCategory: Category) {
@@ -39,13 +41,31 @@ export class AppComponent {
     console.log('New Category: ');
     console.log(newCategory);
     this.competition.categories = this.competition.categories.concat(newCategory);
+    this.store();
   }
 
   deleteCategory(removedCategory: Category) {
     this.competition.categories = this.competition.categories.filter(c => c !== removedCategory);
+    this.store();
   }
 
   addCompetitor(newCompetitor: Competitor) {
     this.competition.comptetitors = this.competition.comptetitors.concat(newCompetitor);
+    this.store();
+  }
+
+  updatePhaseA($event: PhaseData) {
+    this.competition.phaseA = $event;
+    this.store();
+  }
+
+  updatePhaseTransfer($event: PhaseData) {
+    this.competition.phaseTransfer = $event;
+    this.store();
+  }
+
+  updatePhaseB($event: PhaseData) {
+    this.competition.phaseB = $event;
+    this.store();
   }
 }
