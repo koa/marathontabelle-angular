@@ -22,12 +22,13 @@ export class AppComponent {
         startPhaseA: {hours: 10, minutes: 12}
       }],
       phaseA: {
-        length: 0, milestones: []
-      },
+        length: 0, milestones: [], categories: new Map()
+      }
+      ,
       phaseTransfer: {
-        length: 0, milestones: []
+        length: 0, milestones: [], categories: new Map()
       },
-      phaseB: {length: 0, milestones: []}
+      phaseB: {length: 0, milestones: [], categories: new Map()}
     };
   }
 

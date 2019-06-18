@@ -13,12 +13,12 @@
                          (addCompetitor)="addCompetitor($event)"></app-competitor-list>
   </mat-tab>
   <mat-tab label="Phase A">
-    <app-phase-editor [phaseData]="competition.phaseA" (update)="updatePhaseA($event)"></app-phase-editor>
+    <app-phase-editor [phaseData]="competition.phaseA"  [categories]="competition.categories"  (update)="updatePhaseA($event)"></app-phase-editor>
   </mat-tab>
   <mat-tab label="Phase Transfer">
-    <app-phase-editor [phaseData]="competition.phaseTransfer" (update)="updatePhaseTransfer($event)"></app-phase-editor>
+    <app-phase-editor [phaseData]="competition.phaseTransfer" [categories]="competition.categories" (update)="updatePhaseTransfer($event)"></app-phase-editor>
   </mat-tab>
   <mat-tab label="Phase B">
-    <app-phase-editor [phaseData]="competition.phaseB" (update)="updatePhaseB($event)"></app-phase-editor>
+    <app-phase-editor [phaseData]="competition.phaseB" [categories]="competition.categories" (update)="updatePhaseB($event)"></app-phase-editor>
   </mat-tab>
 </mat-tab-group>

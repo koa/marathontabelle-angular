@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PhaseData} from '../../interfaces/phaseData';
 import {Milestone} from '../../interfaces/milestone';
 import {Category} from '../../interfaces/category';
+import {PhaseCategoryEntry} from '../../interfaces/phase-category-entry';
 
 @Component({
   selector: 'app-phase-editor',
@@ -14,10 +15,12 @@ export class PhaseEditorComponent implements OnInit {
   TYPE_OBSTACLE = 'H';
   TYPE_CTF = 'Pt';
   @Input() phaseData: PhaseData;
+  @Input() categories: Category[];
 
   @Output() update = new EventEmitter<PhaseData>();
 
-  displayedColumns: string[] = ['type', 'index', 'position', 'showOnTableButton', 'showOnSmallSheetButton', 'deleteButton', 'upButton', 'downButton'];
+  displayedMilestoneColumns: string[] = ['type', 'index', 'position', 'showOnTableButton', 'showOnSmallSheetButton', 'deleteButton', 'upButton', 'downButton'];
+  displayedCategoryColumns: string[] = ['category', 'speed', 'speedTime'];
 
   constructor() {
   }
@@ -107,5 +110,34 @@ export class PhaseEditorComponent implements OnInit {
     milestone.visibleOnSmallSheet = !milestone.visibleOnSmallSheet;
     this.updateIndizes();
 
+  }
+
+  updateCategories(name: string, value: string) {
+    // tslint:disable-next-line:radix
+    const numberValue = parseInt(value);
+    const categoryValues: Map<string, PhaseCategoryEntry> = this.phaseData.categories;
+    if (!categoryValues.has(name)) {
+      categoryValues.set(name, {
+        maxDuration: 0, minDuration: 0, speed: numberValue
+      });
+    } else {
+      categoryValues.get(name).speed = numberValue;
+    }
+    this.update.emit(this.phaseData);
+  }
+
+  calcTimeOfSpeed(category: Category): string {
+    const phaseCategoryEntry: PhaseCategoryEntry = this.phaseData.categories.get(category.name);
+    console.log('Phase Entry: ' + phaseCategoryEntry);
+    if (phaseCategoryEntry == null) {
+      return '';
+    }
+    const duration: number = this.phaseData.length / 1000 / phaseCategoryEntry.speed * 3600;
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.round(duration % 60);
+    return minutes.toString().padStart(2, '0')
+      + ':' +
+      seconds.toString().padStart(2, '0')
+      ;
   }
 }
